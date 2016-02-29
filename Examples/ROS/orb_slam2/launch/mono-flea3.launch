@@ -1,0 +1,14 @@
+<launch>
+
+  <!-- Setup the camera -->
+  <arg name="camera" default="camera"/>
+
+  <!-- Launch pointgrey drivers -->
+  <include file="$(find vins_launch)/launch/point-grey.launch" />
+
+  <!-- ORB_SLAM2 Mono -->
+  <node pkg="orb_slam2" type="mono" name="mono" output="screen" args="$(find orb_slam2)../../../Vocabulary/ORBvoc.txt $(find orb_slam2)/config/mono-flea3.yaml">
+    <remap from="/camera/image_raw" to="$(arg camera)/image_raw"/>
+  </node>
+
+</launch>

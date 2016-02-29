@@ -1,0 +1,19 @@
+# Main build folder
+build/*
+lib/*
+
+# Expanded vocabulary file
+Vocabulary/ORBvoc.txt
+
+# Thirdparty builds
+Thirdparty/DBoW2/build/*
+Thirdparty/DBoW2/lib/*
+Thirdparty/g2o/build/*
+Thirdparty/g2o/lib/*
+Thirdparty/g2o/config.h
+
+# Built binaries
+Examples/Monocular/mono_kitti
+Examples/Monocular/mono_tum
+Examples/RGB-D/rgbd_tum
+Examples/Stereo/stereo_kitti
