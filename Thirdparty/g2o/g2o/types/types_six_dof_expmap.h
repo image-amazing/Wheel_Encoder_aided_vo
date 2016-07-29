@@ -71,7 +71,9 @@ public:
   }
 
   virtual void oplusImpl(const double* update_)  {
-    Eigen::Map<const Vector6d> update(update_);
+//    Eigen::Map<const Vector6d> update(update_);
+    Vector6d update;
+    update[1] = update_[1]; update[3] = update_[3]; update[5] = update_[5];
     setEstimate(SE3Quat::exp(update)*estimate());
   }
 };
