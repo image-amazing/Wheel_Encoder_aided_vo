@@ -61,6 +61,27 @@ src/KeyFrameDatabase.cc
 src/Sim3Solver.cc
 src/Initializer.cc
 src/Viewer.cc
+src/WOdometer.cc
+include/System.h
+include/Tracking.h
+include/LocalMapping.h
+include/LoopClosing.h
+include/ORBextractor.h
+include/ORBmatcher.h
+include/FrameDrawer.h
+include/Converter.h
+include/MapPoint.h
+include/KeyFrame.h
+include/Map.h
+include/MapDrawer.h
+include/Optimizer.h
+include/PnPsolver.h
+include/Frame.h
+include/KeyFrameDatabase.h
+include/Sim3Solver.h
+include/Initializer.h
+include/Viewer.h
+include/WOdometer.h
 )
 
 target_link_libraries(${PROJECT_NAME}

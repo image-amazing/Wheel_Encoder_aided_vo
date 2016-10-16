@@ -34,9 +34,12 @@
 #ifndef G2O_SIX_DOF_TYPES_EXPMAP
 #define G2O_SIX_DOF_TYPES_EXPMAP
 
+#define DO_ONLINE_CALIB
+
 #include "../core/base_vertex.h"
 #include "../core/base_binary_edge.h"
 #include "../core/base_unary_edge.h"
+#include "../core/base_multi_edge.h"
 #include "se3_ops.h"
 #include "se3quat.h"
 #include "types_sba.h"
@@ -203,7 +206,31 @@ public:
   double fx, fy, cx, cy, bf;
 };
 
+#ifdef DO_ONLINE_CALIB
+class EdgeOnlineCalibration : public BaseMultiEdge<6, SE3Quat>
+{
+public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+  EdgeOnlineCalibration();
+
+  bool read(std::istream& is);
+
+  bool write(std::ostream& os) const;
+
+  void computeError()  {
+    const VertexSE3Expmap* prev = static_cast<const VertexSE3Expmap*>(_vertices[0]);
+    const VertexSE3Expmap* cur = static_cast<const VertexSE3Expmap*>(_vertices[1]);
+    const VertexSE3Expmap* calib = static_cast<const VertexSE3Expmap*>(_vertices[2]);
+
+    SE3Quat obs(_measurement);
+
+    SE3Quat manifold_error = obs.inverse()*calib->estimate().inverse()*prev->estimate()*cur->estimate().inverse()*calib->estimate();
+
+    _error = manifold_error.log();
+  }
+};
+#endif
 
 } // end namespace
 

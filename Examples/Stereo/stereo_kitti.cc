@@ -31,7 +31,10 @@
 using namespace std;
 
 void LoadImages(const string &strPathToSequence, vector<string> &vstrImageLeft,
-                vector<string> &vstrImageRight, vector<double> &vTimestamps);
+                vector<string> &vstrImageRight, vector<double> &vTimestamps, vector<vector<double>> &vOdom,
+                vector<pair<double, double>> &vWheel);
+//void LoadImages(const string &strPathToSequence, vector<string> &vstrImageLeft,
+//                vector<string> &vstrImageRight, vector<double> &vTimestamps);
 
 int main(int argc, char **argv)
 {
@@ -45,7 +48,10 @@ int main(int argc, char **argv)
     vector<string> vstrImageLeft;
     vector<string> vstrImageRight;
     vector<double> vTimestamps;
-    LoadImages(string(argv[3]), vstrImageLeft, vstrImageRight, vTimestamps);
+//    LoadImages(string(argv[3]), vstrImageLeft, vstrImageRight, vTimestamps);
+    vector<vector<double>> vOdom;
+    vector<pair<double, double>> vWheel;
+    LoadImages(string(argv[3]), vstrImageLeft, vstrImageRight, vTimestamps, vOdom, vWheel);
 
     const int nImages = vstrImageLeft.size();
 
@@ -68,6 +74,8 @@ int main(int argc, char **argv)
         imLeft = cv::imread(vstrImageLeft[ni],CV_LOAD_IMAGE_UNCHANGED);
         imRight = cv::imread(vstrImageRight[ni],CV_LOAD_IMAGE_UNCHANGED);
         double tframe = vTimestamps[ni];
+        vector<double> vOdo = vOdom[ni];
+        pair<double, double> vpair = vWheel[ni];
 
         if(imLeft.empty())
         {
@@ -83,7 +91,8 @@ int main(int argc, char **argv)
 #endif
 
         // Pass the images to the SLAM system
-        SLAM.TrackStereo(imLeft,imRight,tframe);        
+        SLAM.TrackStereo(imLeft,imRight,tframe, vOdo, vpair);
+//        SLAM.TrackStereo(imLeft,imRight,tframe);
 
 #ifdef COMPILEDWITHC11
         std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
@@ -127,11 +136,16 @@ int main(int argc, char **argv)
 }
 
 void LoadImages(const string &strPathToSequence, vector<string> &vstrImageLeft,
-                vector<string> &vstrImageRight, vector<double> &vTimestamps)
+                vector<string> &vstrImageRight, vector<double> &vTimestamps, vector<vector<double>> &vOdom,
+                vector<pair<double, double>> &vWheel)
 {
-    ifstream fTimes;
+    ifstream fTimes, fOdoms, fWheel;
     string strPathTimeFile = strPathToSequence + "/times.txt";
+    string strPathOdomFile = strPathToSequence + "/closestodom.txt";
+    string strPathWheelFile = strPathToSequence + "/closestwheel.txt";
     fTimes.open(strPathTimeFile.c_str());
+    fOdoms.open(strPathOdomFile.c_str());
+    fWheel.open(strPathWheelFile.c_str());
     while(!fTimes.eof())
     {
         string s;
@@ -144,6 +158,29 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageLeft,
             ss >> t;
             vTimestamps.push_back(t);
         }
+    }
+    for(int i = 0; i < vTimestamps.size(); i++)
+    {
+        double time, x, y, theta;
+        vector<double> temp;
+
+        fOdoms >> time;
+        fOdoms >> x;
+        fOdoms >> y;
+        fOdoms >> theta;
+        temp.push_back(x); temp.push_back(y); temp.push_back(theta);
+        vOdom.push_back(temp);
+    }
+    for(int i = 0; i < vTimestamps.size(); i++)
+    {
+        double time, vl, vr;
+        pair<double, double> temp;
+
+        fWheel >> time;
+        fWheel >> vl;
+        fWheel >> vr;
+        temp.first = vl; temp.second = vr;
+        vWheel.push_back(temp);
     }
 
     string strPrefixLeft = strPathToSequence + "/image_0/";
@@ -161,3 +198,39 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageLeft,
         vstrImageRight[i] = strPrefixRight + ss.str() + ".png";
     }
 }
+
+//void LoadImages(const string &strPathToSequence, vector<string> &vstrImageLeft,
+//                vector<string> &vstrImageRight, vector<double> &vTimestamps)
+//{
+//    ifstream fTimes;
+//    string strPathTimeFile = strPathToSequence + "/times.txt";
+//    fTimes.open(strPathTimeFile.c_str());
+//    while(!fTimes.eof())
+//    {
+//        string s;
+//        getline(fTimes,s);
+//        if(!s.empty())
+//        {
+//            stringstream ss;
+//            ss << s;
+//            double t;
+//            ss >> t;
+//            vTimestamps.push_back(t);
+//        }
+//    }
+
+//    string strPrefixLeft = strPathToSequence + "/image_0/";
+//    string strPrefixRight = strPathToSequence + "/image_1/";
+
+//    const int nTimes = vTimestamps.size();
+//    vstrImageLeft.resize(nTimes);
+//    vstrImageRight.resize(nTimes);
+
+//    for(int i=0; i<nTimes; i++)
+//    {
+//        stringstream ss;
+//        ss << setfill('0') << setw(6) << i;
+//        vstrImageLeft[i] = strPrefixLeft + ss.str() + ".png";
+//        vstrImageRight[i] = strPrefixRight + ss.str() + ".png";
+//    }
+//}

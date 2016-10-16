@@ -34,6 +34,8 @@
 
 #include<mutex>
 
+#define DO_ONLINE_CALIB
+
 namespace ORB_SLAM2
 {
 
@@ -519,6 +521,9 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool* pbStopFlag, Map* pMap
 
     unsigned long maxKFid = 0;
 
+    vector<KeyFrame*> vertexKF;
+    vector<g2o::VertexSE3Expmap *> vertexV;
+
     // Set Local KeyFrame vertices
     for(list<KeyFrame*>::iterator lit=lLocalKeyFrames.begin(), lend=lLocalKeyFrames.end(); lit!=lend; lit++)
     {
@@ -528,6 +533,8 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool* pbStopFlag, Map* pMap
         vSE3->setId(pKFi->mnId);
         vSE3->setFixed(pKFi->mnId==0);
         optimizer.addVertex(vSE3);
+        vertexV.push_back(vSE3);
+        vertexKF.push_back(pKFi);
         if(pKFi->mnId>maxKFid)
             maxKFid=pKFi->mnId;
     }
@@ -652,12 +659,66 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool* pbStopFlag, Map* pMap
         }
     }
 
-    if(pbStopFlag)
-        if(*pbStopFlag)
-            return;
+#ifdef DO_ONLINE_CALIB
+    std::vector<Eigen::Vector3d> vConstraints;
+    std::vector<Eigen::Matrix3d> vCovariance;
+    WOdometer::generateOdom(vertexKF, vConstraints, vCovariance);
 
-    optimizer.initializeOptimization();
-    optimizer.optimize(5);
+    g2o::VertexSE3Expmap* vCalib = new g2o::VertexSE3Expmap;
+    Eigen::Matrix3d priorR = Eigen::Matrix3d::Identity();
+    priorR.row(0) = Eigen::Vector3d(-0.0134899,-0.997066,0.0753502);
+    priorR.row(1) = Eigen::Vector3d(-0.0781018,-0.0740761,-0.99419);
+    priorR.row(2) = Eigen::Vector3d(0.996854,-0.0192965,-0.0768734);
+    g2o::SE3Quat calibEst = g2o::SE3Quat(priorR, Eigen::Vector3d(0.056829,0.522781,-0.134488));
+    vCalib->setEstimate(calibEst);
+    int id_ = 99999999;
+    vCalib->setId(id_);
+    optimizer.addVertex(vCalib);
+    for(int i = 0; i < 1; i ++)
+    {
+        for(int i = 0; i < vertexV.size() - 1; i++)
+        {
+            g2o::VertexSE3Expmap* lastV = vertexV[i];
+            g2o::VertexSE3Expmap* curV = vertexV[i+1];
+            Eigen::Vector3d relativePose = vConstraints[i];
+            Eigen::Matrix3d covariance = vCovariance[i];
+
+            Eigen::AngleAxisd rotz(relativePose[2], Eigen::Vector3d::UnitZ());
+            g2o::SE3Quat relativePose_SE3Quat(rotz.toRotationMatrix(), Eigen::Vector3d(relativePose[0], relativePose[1], 0));
+            g2o::Matrix6d covariance_6d = g2o::Matrix6d::Identity();
+            covariance_6d(0,0) = covariance(0,0); covariance_6d(0,1) = covariance(0,1);
+            covariance_6d(1,0) = covariance(1,0); covariance_6d(1,1) = covariance(1,1);
+            covariance_6d(0,5) = covariance(0,2); covariance_6d(1,5) = covariance(1,2);
+            covariance_6d(5,0) = covariance(2,0); covariance_6d(5,1) = covariance(2,1);
+            covariance_6d(5,5) = covariance(2,2);
+            covariance_6d(2,2) = 99999999; covariance_6d(3,3) = 99999999; covariance_6d(4,4) = 99999999;
+
+            cout << "test relative pose " << relativePose << endl;
+            cout << "test covariance " << endl;
+            cout << covariance << endl;
+            cout << "test 6d relative pose " << relativePose_SE3Quat << endl;
+            cout << "test 6d covariance " << endl;
+            cout << covariance_6d.inverse() << endl;
+
+            g2o::Matrix6d Info = g2o::Matrix6d::Identity();
+            Info = covariance_6d.inverse();
+
+            g2o::EdgeOnlineCalibration* e = new g2o::EdgeOnlineCalibration;
+            e->vertices()[0] = lastV;
+            e->vertices()[1] = curV;
+            e->vertices()[2] = vCalib;
+            e->setMeasurement(relativePose_SE3Quat);
+            e->setInformation(Info);
+            optimizer.addEdge(e);
+        }
+
+        if(pbStopFlag)
+            if(*pbStopFlag)
+                return;
+
+        optimizer.initializeOptimization();
+        optimizer.optimize(5);
+    }
 
     bool bDoMore= true;
 
@@ -703,10 +764,105 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool* pbStopFlag, Map* pMap
 
     // Optimize again without the outliers
 
-    optimizer.initializeOptimization(0);
-    optimizer.optimize(10);
+    for(int i = 0; i < 1; i ++)
+    {
+        for(int i = 0; i < vertexV.size() - 1; i++)
+        {
+            g2o::VertexSE3Expmap* lastV = vertexV[i];
+            g2o::VertexSE3Expmap* curV = vertexV[i+1];
+            Eigen::Vector3d relativePose = vConstraints[i];
+            Eigen::Matrix3d covariance = vCovariance[i];
 
+            Eigen::AngleAxisd rotz(relativePose[2], Eigen::Vector3d::UnitZ());
+            g2o::SE3Quat relativePose_SE3Quat(rotz.toRotationMatrix(), Eigen::Vector3d(relativePose[0], relativePose[1], 0));
+            g2o::Matrix6d covariance_6d = g2o::Matrix6d::Identity();
+            covariance_6d(0,0) = covariance(0,0); covariance_6d(0,1) = covariance(0,1);
+            covariance_6d(1,0) = covariance(1,0); covariance_6d(1,1) = covariance(1,1);
+            covariance_6d(0,5) = covariance(0,2); covariance_6d(1,5) = covariance(1,2);
+            covariance_6d(5,0) = covariance(2,0); covariance_6d(5,1) = covariance(2,1);
+            covariance_6d(5,5) = covariance(2,2);
+            covariance_6d(2,2) = 99999999; covariance_6d(3,3) = 99999999; covariance_6d(4,4) = 99999999;
+
+            cout << "test relative pose " << relativePose << endl;
+            cout << "test covariance " << endl;
+            cout << covariance << endl;
+            cout << "test 6d relative pose " << relativePose_SE3Quat << endl;
+            cout << "test 6d covariance " << endl;
+            cout << covariance_6d.inverse() << endl;
+
+            g2o::Matrix6d Info = g2o::Matrix6d::Identity();
+            Info = covariance_6d.inverse();
+
+            g2o::EdgeOnlineCalibration* e = new g2o::EdgeOnlineCalibration;
+            e->vertices()[0] = lastV;
+            e->vertices()[1] = curV;
+            e->vertices()[2] = vCalib;
+            e->setMeasurement(relativePose_SE3Quat);
+            e->setInformation(Info);
+            optimizer.addEdge(e);
+        }
+
+        optimizer.initializeOptimization();
+        optimizer.optimize(10);
     }
+    }
+#endif
+
+//    if(pbStopFlag)
+//        if(*pbStopFlag)
+//            return;
+
+//    optimizer.initializeOptimization();
+//    optimizer.optimize(5);
+
+//    bool bDoMore= true;
+
+//    if(pbStopFlag)
+//        if(*pbStopFlag)
+//            bDoMore = false;
+
+//    if(bDoMore)
+//    {
+
+//    // Check inlier observations
+//    for(size_t i=0, iend=vpEdgesMono.size(); i<iend;i++)
+//    {
+//        g2o::EdgeSE3ProjectXYZ* e = vpEdgesMono[i];
+//        MapPoint* pMP = vpMapPointEdgeMono[i];
+
+//        if(pMP->isBad())
+//            continue;
+
+//        if(e->chi2()>5.991 || !e->isDepthPositive())
+//        {
+//            e->setLevel(1);
+//        }
+
+//        e->setRobustKernel(0);
+//    }
+
+//    for(size_t i=0, iend=vpEdgesStereo.size(); i<iend;i++)
+//    {
+//        g2o::EdgeStereoSE3ProjectXYZ* e = vpEdgesStereo[i];
+//        MapPoint* pMP = vpMapPointEdgeStereo[i];
+
+//        if(pMP->isBad())
+//            continue;
+
+//        if(e->chi2()>7.815 || !e->isDepthPositive())
+//        {
+//            e->setLevel(1);
+//        }
+
+//        e->setRobustKernel(0);
+//    }
+
+//    // Optimize again without the outliers
+
+//    optimizer.initializeOptimization(0);
+//    optimizer.optimize(10);
+
+//    }
 
     vector<pair<KeyFrame*,MapPoint*> > vToErase;
     vToErase.reserve(vpEdgesMono.size()+vpEdgesStereo.size());

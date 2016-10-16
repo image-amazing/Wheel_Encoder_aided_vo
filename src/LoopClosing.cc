@@ -72,7 +72,7 @@ void LoopClosing::Run()
                if(ComputeSim3())
                {
                    // Perform loop fusion and pose graph optimization
-                   CorrectLoop();
+//                   CorrectLoop();
                }
             }
         }       

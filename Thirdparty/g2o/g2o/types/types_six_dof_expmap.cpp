@@ -363,5 +363,22 @@ void EdgeStereoSE3ProjectXYZOnlyPose::linearizeOplus() {
   _jacobianOplusXi(2,5) = _jacobianOplusXi(0,5)-bf*invz_2;
 }
 
+#ifdef DO_ONLINE_CALIB
+EdgeOnlineCalibration::EdgeOnlineCalibration() : BaseMultiEdge<6,SE3Quat>() {
+    resize(3);
+}
+
+bool EdgeOnlineCalibration::read(std::istream& is)
+{
+  (void) is;
+  return false;
+}
+
+bool EdgeOnlineCalibration::write(std::ostream& os) const
+{
+  (void) os;
+  return false;
+}
+#endif
 
 } // end namespace

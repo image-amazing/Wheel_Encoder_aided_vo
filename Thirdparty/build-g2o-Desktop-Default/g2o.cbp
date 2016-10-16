@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="g2o" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\cmake_modules\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="g2o">
+         <Option output="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/lib/libg2o.so" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default" />
+         <Option object_output="./" />
+         <Option type="3" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DUNIX" />
+            <Add directory="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/core" />
+            <Add directory="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/stuff" />
+            <Add directory="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/types" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.8" />
+            <Add directory="/usr/include/c++/4.8/backward" />
+            <Add directory="/usr/include/eigen3" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 g2o" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="g2o/fast">
+         <Option output="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/lib/libg2o.so" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default" />
+         <Option object_output="./" />
+         <Option type="3" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DUNIX" />
+            <Add directory="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/core" />
+            <Add directory="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/stuff" />
+            <Add directory="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/types" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.8" />
+            <Add directory="/usr/include/c++/4.8/backward" />
+            <Add directory="/usr/include/eigen3" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 g2o/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/doom/github/ORB_SLAM2/Thirdparty/build-g2o-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/batch_stats.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/cache.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/estimate_propagator.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/factory.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/hyper_dijkstra.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/hyper_graph.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/hyper_graph_action.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/jacobian_workspace.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/marginal_covariance_cholesky.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/matrix_structure.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/optimizable_graph.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/optimization_algorithm.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/optimization_algorithm_factory.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/optimization_algorithm_levenberg.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/optimization_algorithm_with_hessian.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/parameter.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/parameter_container.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/robust_kernel.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/robust_kernel_factory.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/robust_kernel_impl.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/solver.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/sparse_optimizer.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/stuff/os_specific.c">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/stuff/property.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/stuff/string_tools.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/stuff/timeutil.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/types/types_sba.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/types/types_six_dof_expmap.cpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/base_binary_edge.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/base_binary_edge.hpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/base_edge.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/base_multi_edge.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/base_multi_edge.hpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/base_unary_edge.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/base_unary_edge.hpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/base_vertex.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/base_vertex.hpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/batch_stats.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/block_solver.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/block_solver.hpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/cache.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/creators.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/estimate_propagator.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/factory.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/hyper_dijkstra.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/hyper_graph.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/hyper_graph_action.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/jacobian_workspace.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/linear_solver.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/marginal_covariance_cholesky.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/matrix_structure.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/openmp_mutex.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/optimizable_graph.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/optimization_algorithm.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/optimization_algorithm_factory.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/optimization_algorithm_levenberg.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/optimization_algorithm_property.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/optimization_algorithm_with_hessian.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/parameter.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/parameter_container.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/robust_kernel.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/robust_kernel_factory.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/robust_kernel_impl.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/solver.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/sparse_block_matrix.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/sparse_block_matrix.hpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/core/sparse_optimizer.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/stuff/color_macros.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/stuff/macros.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/stuff/misc.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/stuff/os_specific.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/stuff/property.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/stuff/string_tools.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/stuff/timeutil.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/types/se3_ops.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/types/se3_ops.hpp">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/types/se3quat.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/types/types_sba.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h">
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/config.h.in">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/cmake_modules/FindBLAS.cmake">
+          <Option virtualFolder="CMake Files\cmake_modules\" />
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/cmake_modules/FindLAPACK.cmake">
+          <Option virtualFolder="CMake Files\cmake_modules\" />
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/cmake_modules/FindBLAS.cmake">
+          <Option virtualFolder="CMake Files\cmake_modules\" />
+      </Unit>
+      <Unit filename="/home/doom/github/ORB_SLAM2/Thirdparty/g2o/cmake_modules/FindEigen3.cmake">
+          <Option virtualFolder="CMake Files\cmake_modules\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>

@@ -112,13 +112,13 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     mpLoopCloser->SetLocalMapper(mpLocalMapper);
 }
 
-cv::Mat System::TrackStereo(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timestamp)
+cv::Mat System::TrackStereo(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timestamp, const vector<double> &Odom, const pair<double, double> &wheel)
 {
     if(mSensor!=STEREO)
     {
         cerr << "ERROR: you called TrackStereo but input sensor was not set to STEREO." << endl;
         exit(-1);
-    }   
+    }
 
     // Check mode change
     {
@@ -154,8 +154,53 @@ cv::Mat System::TrackStereo(const cv::Mat &imLeft, const cv::Mat &imRight, const
     }
     }
 
-    return mpTracker->GrabImageStereo(imLeft,imRight,timestamp);
+    return mpTracker->GrabImageStereo(imLeft,imRight,timestamp, Odom, wheel);
 }
+
+//cv::Mat System::TrackStereo(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timestamp)
+//{
+//    if(mSensor!=STEREO)
+//    {
+//        cerr << "ERROR: you called TrackStereo but input sensor was not set to STEREO." << endl;
+//        exit(-1);
+//    }
+
+//    // Check mode change
+//    {
+//        unique_lock<mutex> lock(mMutexMode);
+//        if(mbActivateLocalizationMode)
+//        {
+//            mpLocalMapper->RequestStop();
+
+//            // Wait until Local Mapping has effectively stopped
+//            while(!mpLocalMapper->isStopped())
+//            {
+//                usleep(1000);
+//            }
+
+//            mpTracker->InformOnlyTracking(true);
+//            mbActivateLocalizationMode = false;
+//        }
+//        if(mbDeactivateLocalizationMode)
+//        {
+//            mpTracker->InformOnlyTracking(false);
+//            mpLocalMapper->Release();
+//            mbDeactivateLocalizationMode = false;
+//        }
+//    }
+
+//    // Check reset
+//    {
+//    unique_lock<mutex> lock(mMutexReset);
+//    if(mbReset)
+//    {
+//        mpTracker->Reset();
+//        mbReset = false;
+//    }
+//    }
+
+//    return mpTracker->GrabImageStereo(imLeft,imRight,timestamp);
+//}
 
 cv::Mat System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap, const double &timestamp)
 {

@@ -187,6 +187,9 @@ public:
 
     static bool mbInitialComputations;
 
+    float odomx, odomy, odomtheta;
+
+    double vl, vr;
 
 private:
 

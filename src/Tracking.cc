@@ -163,8 +163,7 @@ void Tracking::SetViewer(Viewer *pViewer)
     mpViewer=pViewer;
 }
 
-
-cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRectRight, const double &timestamp)
+cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRectRight, const double &timestamp, const vector<double> &Odom, const pair<double, double> &wheel)
 {
     mImGray = imRectLeft;
     cv::Mat imGrayRight = imRectRight;
@@ -197,11 +196,53 @@ cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRe
     }
 
     mCurrentFrame = Frame(mImGray,imGrayRight,timestamp,mpORBextractorLeft,mpORBextractorRight,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+    mCurrentFrame.odomx = Odom[0]; mCurrentFrame.odomy = Odom[1]; mCurrentFrame.odomtheta = Odom[2];
+    mCurrentFrame.vl = wheel.first; mCurrentFrame.vr = wheel.second;
+//    cout << wheel.first << " " << wheel.second << endl;
 
     Track();
 
     return mCurrentFrame.mTcw.clone();
 }
+
+//cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRectRight, const double &timestamp)
+//{
+//    mImGray = imRectLeft;
+//    cv::Mat imGrayRight = imRectRight;
+
+//    if(mImGray.channels()==3)
+//    {
+//        if(mbRGB)
+//        {
+//            cvtColor(mImGray,mImGray,CV_RGB2GRAY);
+//            cvtColor(imGrayRight,imGrayRight,CV_RGB2GRAY);
+//        }
+//        else
+//        {
+//            cvtColor(mImGray,mImGray,CV_BGR2GRAY);
+//            cvtColor(imGrayRight,imGrayRight,CV_BGR2GRAY);
+//        }
+//    }
+//    else if(mImGray.channels()==4)
+//    {
+//        if(mbRGB)
+//        {
+//            cvtColor(mImGray,mImGray,CV_RGBA2GRAY);
+//            cvtColor(imGrayRight,imGrayRight,CV_RGBA2GRAY);
+//        }
+//        else
+//        {
+//            cvtColor(mImGray,mImGray,CV_BGRA2GRAY);
+//            cvtColor(imGrayRight,imGrayRight,CV_BGRA2GRAY);
+//        }
+//    }
+
+//    mCurrentFrame = Frame(mImGray,imGrayRight,timestamp,mpORBextractorLeft,mpORBextractorRight,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+
+//    Track();
+
+//    return mCurrentFrame.mTcw.clone();
+//}
 
 
 cv::Mat Tracking::GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, const double &timestamp)
